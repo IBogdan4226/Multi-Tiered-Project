@@ -1,32 +1,43 @@
 import { Box } from '@mui/material';
-import { Route, Routes, Navigate } from 'react-router-dom';
+import { Navigate, Route, Routes } from 'react-router-dom';
+import { LoginPage } from './components/LoginPage/LoginPage';
+import { Navbar } from './components/NavBar/NavBar';
 import NotFoundPage from './components/NotFoundPage/NotFoundPage';
 import PersistLogin from './components/PersistLogin/PersistLogin';
+import { RegisterPage } from './components/RegisterPage/RegisterPage';
 import {
   RequireAuth,
   RequireNoAuth,
 } from './components/RequireAuth/RequireAuth';
-import { LoginPage } from './components/LoginPage/LoginPage';
-import { RegisterPage } from './components/RegisterPage/RegisterPage';
+import CreateTestPage from './components/Tests/CreateTest/CreateTest';
 import { Tests } from './components/Tests/Tests';
+
+export enum AppRoute {
+  LOGIN = '/login',
+  REGISTER = '/register',
+  TESTS = '/tests',
+  CREATETEST = '/create-test',
+}
 
 function App() {
   return (
     <Box width="100%" height="100%">
+      <Navbar />
       <Routes>
         <Route path="">
           <Route element={<PersistLogin />}>
             <Route element={<RequireNoAuth />}>
-              <Route path="/login" element={<LoginPage />} />
-              <Route path="/register" element={<RegisterPage />} />
+              <Route path={AppRoute.LOGIN} element={<LoginPage />} />
+              <Route path={AppRoute.REGISTER} element={<RegisterPage />} />
             </Route>
           </Route>
 
           <Route element={<RequireAuth />}>
-            <Route path="/" element={<Navigate to="/tests" />} />
-            <Route path="/tests" element={<Tests />} />
+            <Route path="/" element={<Navigate to={AppRoute.TESTS} />} />
+            <Route path={AppRoute.TESTS} element={<Tests />} />
+            <Route path={AppRoute.CREATETEST} element={<CreateTestPage />} />
+            <Route path="*" element={<NotFoundPage />} />
           </Route>
-          <Route path="*" element={<NotFoundPage />} />
         </Route>
       </Routes>
     </Box>
