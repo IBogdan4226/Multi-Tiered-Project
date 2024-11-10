@@ -1,6 +1,7 @@
 package com.multitiered.multitiered.Interfaces;
 
 import com.multitiered.multitiered.Entities.User;
+
 import java.util.List;
 
 public interface IUserService {

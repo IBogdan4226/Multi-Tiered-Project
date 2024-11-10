@@ -6,7 +6,7 @@ import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 
 @SpringBootApplication(exclude = {DataSourceAutoConfiguration.class})
 public class MultitieredApplication {
-	public static void main(String[] args) {
-		SpringApplication.run(MultitieredApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(MultitieredApplication.class, args);
+    }
 }

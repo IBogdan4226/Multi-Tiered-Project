@@ -3,7 +3,9 @@ package com.multitiered.multitiered.Entities;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
-import javax.validation.constraints.*;
+
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 @Document(collection = "users")
 public class User {
