@@ -25,3 +25,9 @@ export type AnswerDTO = {
   answer: string;
   isCorrect: boolean;
 };
+
+export type Student = {
+  id: string;
+  name: string;
+  group: string;
+};

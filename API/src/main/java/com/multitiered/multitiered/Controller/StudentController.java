@@ -10,6 +10,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @RestController
 @RequestMapping("/api/student")
 public class StudentController {
@@ -18,6 +21,22 @@ public class StudentController {
     @Autowired
     public StudentController(IStudentService studentService) {
         _studentService = studentService;
+    }
+
+    @GetMapping()
+    public ResponseEntity<?> getStudents(@RequestParam(required = false) String studentName,
+                                         @RequestParam(required = false) String groupName) {
+        List<Student> students = _studentService.listAll(studentName,groupName);
+        if (students.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        List<StudentDTO> studentsPreview =
+                students.stream().map(
+                        student -> new StudentDTO(student)
+                ).collect(Collectors.toList());
+
+        return new ResponseEntity<>(studentsPreview, HttpStatus.OK);
+
     }
 
     @GetMapping("{id}")

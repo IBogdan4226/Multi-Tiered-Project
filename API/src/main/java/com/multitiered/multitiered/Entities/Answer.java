@@ -1,9 +1,11 @@
 package com.multitiered.multitiered.Entities;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -11,37 +13,44 @@ import javax.validation.constraints.Size;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Answer {
-
+    @Id
+    @JsonProperty("aId")
     @NotNull(message = "Answer ID cannot be null")
-    private Integer aID;
+    private Integer aId;
 
+    @JsonProperty("answer")
     @NotNull(message = "Answer text cannot be null")
     @Size(min = 1, max = 500, message = "Answer must be between 1 and 500 characters")
     private String answer;
 
+    @JsonProperty("isCorrect")
     private boolean isCorrect;
 
-    public @NotNull(message = "Answer ID cannot be null") Integer getId() {
-        return aID;
+    @JsonProperty("aId")
+    public Integer getAId() {
+        return aId;
     }
 
-    public void setId(@NotNull(message = "Answer ID cannot be null") Integer aID) {
-        this.aID = aID;
+    public void setAId(@NotNull(message = "Answer ID cannot be null") Integer aId) {
+        this.aId = aId;
     }
 
-    public @NotNull(message = "Answer text cannot be null") @Size(min = 1, max = 500, message = "Answer must be between 1 and 500 characters") String getAnswer() {
+    @JsonProperty("answer")
+    public String getAnswer() {
         return answer;
     }
 
-    public void setAnswer(@NotNull(message = "Answer text cannot be null") @Size(min = 1, max = 500, message = "Answer must be between 1 and 500 characters") String answer) {
+    public void setAnswer(@NotNull(message = "Answer text cannot be null")
+                          @Size(min = 1, max = 500, message = "Answer must be between 1 and 500 characters") String answer) {
         this.answer = answer;
     }
 
-    public boolean isCorrect() {
+    @JsonProperty("isCorrect")
+    public boolean getIsCorrect() {
         return isCorrect;
     }
 
-    public void setCorrect(boolean correct) {
-        isCorrect = correct;
+    public void setIsCorrect(boolean isCorrect) {
+        this.isCorrect = isCorrect;
     }
 }

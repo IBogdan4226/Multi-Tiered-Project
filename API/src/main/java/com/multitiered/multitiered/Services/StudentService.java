@@ -6,8 +6,8 @@ import com.multitiered.multitiered.Interfaces.IStudentService;
 import com.multitiered.multitiered.Repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class StudentService implements IStudentService {
@@ -19,9 +19,11 @@ public class StudentService implements IStudentService {
     }
 
     @Override
-    public List<Student> listAll() {
-        return _studentRepo.findAll();
-    }
+    public List<Student> listAll(String studentName, String groupName) {
+        return _studentRepo.findAllByNameContainingAndGroupContaining(
+                Objects.requireNonNullElse(studentName, ""),
+                Objects.requireNonNullElse(groupName, "")
+        );    }
 
     @Override
     public Student getStudent(String studentId) throws StudentNotFound {

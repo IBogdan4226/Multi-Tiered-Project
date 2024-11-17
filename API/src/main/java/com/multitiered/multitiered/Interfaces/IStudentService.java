@@ -6,7 +6,7 @@ import com.multitiered.multitiered.Exceptions.StudentNotFound;
 import java.util.List;
 
 public interface IStudentService {
-    List<Student> listAll();
+    List<Student> listAll(String studentName, String groupName);
 
     Student getStudent(String studentId) throws StudentNotFound;
 

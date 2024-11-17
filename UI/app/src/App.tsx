@@ -11,12 +11,16 @@ import {
 } from './components/RequireAuth/RequireAuth';
 import CreateTestPage from './components/Tests/CreateTest/CreateTest';
 import { Tests } from './components/Tests/Tests';
+import UpdateTestPage from './components/Tests/UpdateTest/UpdateTest';
+import { Students } from './components/Students/Students';
 
 export enum AppRoute {
   LOGIN = '/login',
   REGISTER = '/register',
   TESTS = '/tests',
   CREATETEST = '/create-test',
+  UPDATETEST = '/update-test',
+  STUDENTS = '/students',
 }
 
 function App() {
@@ -36,6 +40,12 @@ function App() {
             <Route path="/" element={<Navigate to={AppRoute.TESTS} />} />
             <Route path={AppRoute.TESTS} element={<Tests />} />
             <Route path={AppRoute.CREATETEST} element={<CreateTestPage />} />
+            <Route
+              path={`${AppRoute.UPDATETEST}/:testId`}
+              element={<UpdateTestPage />}
+            />
+            <Route path={`${AppRoute.STUDENTS}`} element={<Students />} />
+
             <Route path="*" element={<NotFoundPage />} />
           </Route>
         </Route>

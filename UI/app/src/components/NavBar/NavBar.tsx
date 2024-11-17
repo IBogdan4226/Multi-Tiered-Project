@@ -17,6 +17,7 @@ import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 enum Tabs {
   Tests = 'tests',
   CreateTests = 'createTests',
+  Students = 'students',
 }
 
 export const Navbar = () => {
@@ -38,6 +39,9 @@ export const Navbar = () => {
     if (currentPath === AppRoute.TESTS) setCurrentTab(Tabs.Tests);
     else if (currentPath === AppRoute.CREATETEST)
       setCurrentTab(Tabs.CreateTests);
+    else if (currentPath.includes(AppRoute.UPDATETEST))
+      setCurrentTab(Tabs.Tests);
+    else if (currentPath === AppRoute.STUDENTS) setCurrentTab(Tabs.Students);
     else setCurrentTab(null);
   }, [location.pathname]);
 
@@ -62,7 +66,10 @@ export const Navbar = () => {
             component={NavLink}
             to={AppRoute.TESTS}
             color="inherit"
-            sx={{ fontWeight: currentTab === Tabs.Tests ? 'bold' : 'normal' }}
+            sx={{
+              fontWeight: currentTab === Tabs.Tests ? 'bold' : 'normal',
+              color: currentTab === Tabs.Tests ? 'black' : 'inherit',
+            }}
           >
             See Tests
           </Button>
@@ -72,9 +79,21 @@ export const Navbar = () => {
             color="inherit"
             sx={{
               fontWeight: currentTab === Tabs.CreateTests ? 'bold' : 'normal',
+              color: currentTab === Tabs.CreateTests ? 'black' : 'inherit',
             }}
           >
             Create Test
+          </Button>
+          <Button
+            component={NavLink}
+            to={AppRoute.STUDENTS}
+            color="inherit"
+            sx={{
+              fontWeight: currentTab === Tabs.Students ? 'bold' : 'normal',
+              color: currentTab === Tabs.Students ? 'black' : 'inherit',
+            }}
+          >
+            Students
           </Button>
         </Box>
         <Box sx={{ display: 'flex', alignItems: 'center' }}>

@@ -128,7 +128,7 @@ export const SingleQuestion = ({
                 InputProps={{
                   disableUnderline: true,
                   sx: {
-                    fontSize: '1rem', // Reduced font size for answers
+                    fontSize: '1rem',
                     borderBottom: '1px solid #dadce0',
                     pl: 1,
                   },
