@@ -87,5 +87,25 @@ export const useTestActions = () => {
     []
   );
 
-  return { _getTests, _saveTest, _updateTest, _getTest };
+  const _saveStudentToTest = useCallback(
+    async (
+      testId: string,
+      studentId: string,
+      grade: number,
+      note: string,
+      photo: string | null
+    ) => {
+      return axiosPrivate.put(
+        `test/${testId}/student/${studentId}`,
+        JSON.stringify({
+          grade,
+          note,
+          photo,
+        })
+      );
+    },
+    []
+  );
+
+  return { _getTests, _saveTest, _updateTest, _getTest, _saveStudentToTest };
 };
