@@ -1,10 +1,10 @@
 package com.multitiered.multitiered.Controller;
 
 import com.multitiered.multitiered.Entities.Test;
+import com.multitiered.multitiered.Entities.TestStudent;
 import com.multitiered.multitiered.Exceptions.TestNotFound;
 import com.multitiered.multitiered.Interfaces.ITestService;
-import com.multitiered.multitiered.POJO.TestDTO;
-import com.multitiered.multitiered.POJO.TestPreview;
+import com.multitiered.multitiered.POJO.*;
 import com.multitiered.multitiered.Utils.JwtTokenUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -67,11 +67,41 @@ public class TestController {
         }
     }
 
+    @GetMapping("/{id}/students")
+    public ResponseEntity<?> getStudentsFromTest(@PathVariable String id,
+                                                 @RequestHeader(name = "Authorization") String jwtToken) {
+        String userId = _extractUserId(jwtToken);
+        if (userId == null) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        }
+
+        List<TestStudentGradeLightDTO> students = _testService.findAllStudentsByTestId(id);
+        if (students.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+
+        return ResponseEntity.ok(students);
+    }
+
     @PostMapping
     public ResponseEntity<?> createTest(@RequestBody Test test) {
         try {
             Test savedTest = _testService.save(test);
             TestDTO testDTO = new TestDTO(savedTest);
+            return ResponseEntity.status(HttpStatus.CREATED).body(testDTO);
+        } catch (DataAccessException ex) {
+            return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("Data access error");
+        }
+    }
+
+    @PostMapping("{testId}/student/{studentId}")
+    public ResponseEntity<?> gradeStudent(@RequestBody TestStudentRequestDTO testStudentGrade,
+                                          @PathVariable String testId, @PathVariable String studentId) {
+        try {
+            TestStudent savedTestStudent = _testService.saveStudentGrade(
+                    testStudentGrade, testId, studentId
+            );
+            TestStudentDTO testDTO = new TestStudentDTO(savedTestStudent);
             return ResponseEntity.status(HttpStatus.CREATED).body(testDTO);
         } catch (DataAccessException ex) {
             return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("Data access error");

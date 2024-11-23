@@ -26,7 +26,7 @@ public class StudentController {
     @GetMapping()
     public ResponseEntity<?> getStudents(@RequestParam(required = false) String studentName,
                                          @RequestParam(required = false) String groupName) {
-        List<Student> students = _studentService.listAll(studentName,groupName);
+        List<Student> students = _studentService.listAll(studentName, groupName);
         if (students.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }

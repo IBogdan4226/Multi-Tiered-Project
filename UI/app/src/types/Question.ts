@@ -31,3 +31,16 @@ export type Student = {
   name: string;
   group: string;
 };
+
+export type StudentGradeLightDTO = {
+  id: string;
+  grade: number;
+  studentId: string;
+  studentName: string;
+  testId: string;
+};
+
+export type StudentGradeDTO = StudentGradeLightDTO & {
+  testPhoto: string;
+  note: string;
+};

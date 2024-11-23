@@ -44,6 +44,8 @@ export const Navbar = () => {
     else if (currentPath.includes(AppRoute.TESTDETAILS))
       setCurrentTab(Tabs.Tests);
     else if (currentPath === AppRoute.STUDENTS) setCurrentTab(Tabs.Students);
+    else if (currentPath === AppRoute.TESTSTUDENTDETAILS)
+      setCurrentTab(Tabs.Students);
     else setCurrentTab(null);
   }, [location.pathname]);
 

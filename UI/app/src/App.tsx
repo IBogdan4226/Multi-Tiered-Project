@@ -14,6 +14,7 @@ import CreateTestPage from './components/Tests/CreateTest/CreateTest';
 import TestDetails from './components/Tests/TestDetails/TestDetails';
 import { Tests } from './components/Tests/Tests';
 import UpdateTestPage from './components/Tests/UpdateTest/UpdateTest';
+import { TestStudentDetails } from './components/TestStudentDetails/TestStudentDetails';
 
 export enum AppRoute {
   LOGIN = '/login',
@@ -23,6 +24,7 @@ export enum AppRoute {
   UPDATETEST = '/update-test',
   STUDENTS = '/students',
   TESTDETAILS = '/test-details',
+  TESTSTUDENTDETAILS = '/test-student-details',
 }
 
 function App() {
@@ -49,6 +51,10 @@ function App() {
             <Route
               path={`${AppRoute.UPDATETEST}/:testId`}
               element={<UpdateTestPage />}
+            />
+            <Route
+              path={`${AppRoute.TESTSTUDENTDETAILS}/:testStudentId`}
+              element={<TestStudentDetails />}
             />
             <Route path={`${AppRoute.STUDENTS}`} element={<Students />} />
 

@@ -7,13 +7,14 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { useStudentActions } from 'app/src/hooks/useStudentActions';
 import { useTestActions } from 'app/src/hooks/useTestActions';
-import { QuestionDTO } from 'app/src/types/Question';
+import { QuestionDTO, StudentGradeLightDTO } from 'app/src/types/Question';
 import { useEffect, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useReactToPrint } from 'react-to-print';
 import BubbleSheetComponent from '../TestDownloadables/BubbleSheetComponent';
 import QuestionSheetComponent from '../TestDownloadables/QuestionSheetComponent';
 import { TestStudentModal } from '../TestStudentModal/TestStudentModal';
+import StudentGradeTable from '../TestStudentsTable/TestStudentsTable';
 
 type StudentLabel = {
   id: string;
@@ -26,7 +27,11 @@ const TestDetails = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalError, setModalError] = useState<string | null>(null);
   const [students, setStudents] = useState<StudentLabel[]>([]);
-  const { _getTest, _saveStudentToTest } = useTestActions();
+  const [studentsInTest, setStudentsInTest] = useState<StudentGradeLightDTO[]>(
+    []
+  );
+  const { _getTest, _saveStudentToTest, _getStudentsFromTest } =
+    useTestActions();
   const { _getStudents } = useStudentActions();
   const { testId } = useParams();
   const questionTestRef = useRef<HTMLDivElement>(null);
@@ -40,6 +45,7 @@ const TestDetails = () => {
 
   useEffect(() => {
     getTest(testId);
+    getStudentsFromTest(testId);
   }, [testId]);
 
   const getStudents = async () => {
@@ -63,6 +69,14 @@ const TestDetails = () => {
     }
   };
 
+  const getStudentsFromTest = async (testId: string | undefined) => {
+    if (!testId) return;
+    const res = await _getStudentsFromTest(testId);
+    if (res) {
+      setStudentsInTest(res.data);
+    }
+  };
+
   const toggleModal = () => setIsModalOpen((prev) => !prev);
 
   const handleSaveModal = async (
@@ -82,6 +96,7 @@ const TestDetails = () => {
       );
       if (res) {
         toggleModal();
+        getStudentsFromTest(testId);
       }
     } catch (e) {
       setModalError('Error saving student to test');
@@ -91,6 +106,8 @@ const TestDetails = () => {
     <Box
       sx={{
         height: '100%',
+        maxHeight: ' calc(100vh - 120px ) ',
+        'overflow-y': 'auto',
         padding: 2,
         overflowY: 'auto',
       }}
@@ -193,6 +210,7 @@ const TestDetails = () => {
           error={modalError}
         />
       )}
+      {testId && <StudentGradeTable data={studentsInTest} testId={testId} />}
     </Box>
   );
 };

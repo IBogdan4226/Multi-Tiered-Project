@@ -1,6 +1,12 @@
 import { useCallback } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { QuestionDTO, TestDTO, TestPreviewDTO } from '../types/Question';
+import {
+  QuestionDTO,
+  StudentGradeDTO,
+  StudentGradeLightDTO,
+  TestDTO,
+  TestPreviewDTO,
+} from '../types/Question';
 import useAxiosPrivate from './useAxiosSelfRefresh';
 import { useCancelToken } from './useCancelToken';
 import { AppRoute } from '../App';
@@ -95,7 +101,7 @@ export const useTestActions = () => {
       note: string,
       photo: string | null
     ) => {
-      return axiosPrivate.put(
+      return axiosPrivate.post(
         `test/${testId}/student/${studentId}`,
         JSON.stringify({
           grade,
@@ -107,5 +113,35 @@ export const useTestActions = () => {
     []
   );
 
-  return { _getTests, _saveTest, _updateTest, _getTest, _saveStudentToTest };
+  const _getStudentsFromTest = useCallback(async (testId: string) => {
+    return axiosPrivate.get<StudentGradeLightDTO[]>(`test/${testId}/students`);
+  }, []);
+
+  const _getStudentFromTest = useCallback(async (testStudentId: string) => {
+    return axiosPrivate.get<StudentGradeDTO>(`test-student/${testStudentId}`);
+  }, []);
+
+  const _updateStudentFromTest = useCallback(
+    async (testStudentId: string, note: string, grade: number) => {
+      return axiosPrivate.put<StudentGradeDTO>(
+        `test-student/${testStudentId}`,
+        JSON.stringify({
+          note,
+          grade,
+        })
+      );
+    },
+    []
+  );
+
+  return {
+    _getTests,
+    _saveTest,
+    _updateTest,
+    _getTest,
+    _saveStudentToTest,
+    _getStudentsFromTest,
+    _getStudentFromTest,
+    _updateStudentFromTest
+  };
 };

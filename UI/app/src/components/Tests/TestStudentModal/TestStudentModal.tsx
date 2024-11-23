@@ -55,7 +55,7 @@ export const TestStudentModal = ({
       errors.student = 'Please select a student.';
     }
 
-    if (grade === null || grade === undefined) {
+    if (grade === null || grade === undefined || grade < 1 || grade > 10) {
       errors.grade = 'Please enter a grade.';
     }
 

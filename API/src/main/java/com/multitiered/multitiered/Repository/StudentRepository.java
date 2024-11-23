@@ -11,5 +11,6 @@ import java.util.List;
 @Repository
 public interface StudentRepository extends MongoRepository<Student, String> {
     Page<Student> findByIdIn(List<String> studentIds, Pageable page);
-    List<Student>  findAllByNameContainingAndGroupContaining(String name, String group);
+
+    List<Student> findAllByNameContainingAndGroupContaining(String name, String group);
 }
