@@ -2,6 +2,7 @@ package com.multitiered.multitiered.Controller;
 
 import com.multitiered.multitiered.Entities.Test;
 import com.multitiered.multitiered.Entities.TestStudent;
+import com.multitiered.multitiered.Exceptions.GenericException;
 import com.multitiered.multitiered.Exceptions.TestNotFound;
 import com.multitiered.multitiered.Interfaces.ITestService;
 import com.multitiered.multitiered.POJO.*;
@@ -89,8 +90,8 @@ public class TestController {
             Test savedTest = _testService.save(test);
             TestDTO testDTO = new TestDTO(savedTest);
             return ResponseEntity.status(HttpStatus.CREATED).body(testDTO);
-        } catch (DataAccessException ex) {
-            return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("Data access error");
+        } catch (DataAccessException | GenericException ex) {
+            return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(ex.getMessage());
         }
     }
 
@@ -103,8 +104,8 @@ public class TestController {
             );
             TestStudentDTO testDTO = new TestStudentDTO(savedTestStudent);
             return ResponseEntity.status(HttpStatus.CREATED).body(testDTO);
-        } catch (DataAccessException ex) {
-            return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("Data access error");
+        } catch (DataAccessException | GenericException ex) {
+            return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(ex.getMessage());
         }
     }
 
@@ -127,8 +128,8 @@ public class TestController {
             return ResponseEntity.noContent().build();
         } catch (TestNotFound ex) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
-        } catch (DataAccessException ex) {
-            return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("Data access error");
+        } catch (DataAccessException | GenericException ex) {
+            return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(ex.getMessage());
         }
     }
 

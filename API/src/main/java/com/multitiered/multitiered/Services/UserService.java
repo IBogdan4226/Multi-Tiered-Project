@@ -1,6 +1,7 @@
 package com.multitiered.multitiered.Services;
 
 import com.multitiered.multitiered.Entities.User;
+import com.multitiered.multitiered.Exceptions.GenericException;
 import com.multitiered.multitiered.Interfaces.IUserService;
 import com.multitiered.multitiered.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +27,8 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public User createAccount(User user) {
+    public User createAccount(User user) throws GenericException {
+        validateUserInput(user);
         user.setPassword(_passwordEncoder.encode(user.getPassword()));
         return _userRepo.save(user);
     }
@@ -51,5 +53,25 @@ public class UserService implements IUserService {
     public String getUserAlias(String username) {
         User user = _userRepo.findByUsername(username);
         return user.getAlias();
+    }
+
+    private void validateUserInput(User user) throws GenericException {
+        String userName = user.getUsername();
+        String password = user.getPassword();
+        String alias = user.getAlias();
+
+        if (userName.length() <= 3 || password.length() <= 3 || alias.length() <= 3
+                || userName.length() >= 20 || password.length() >= 20 || alias.length() >= 20) {
+            throw new GenericException("Credentials must have a length greater than 3 and less than 20.");
+        }
+
+        if (containsForbiddenCharacters(userName) || containsForbiddenCharacters(password) || containsForbiddenCharacters(alias)) {
+            throw new GenericException("Username or password contains forbidden characters.");
+        }
+
+    }
+
+    private boolean containsForbiddenCharacters(String input) {
+        return input != null && input.matches(".*[;'" + "\"<>&\\\\/].*");
     }
 }

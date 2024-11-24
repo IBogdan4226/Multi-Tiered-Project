@@ -9,14 +9,15 @@ interface StudentModalProps {
   initialState: Student | null;
 }
 
-export const StudentModal: React.FC<StudentModalProps> = ({
+export const StudentModal = ({
   open,
   onClose,
   onSave,
   initialState,
-}) => {
+}: StudentModalProps) => {
   const [name, setName] = useState<string>('');
   const [group, setGroup] = useState<string>('');
+  const [nameError, setNameError] = useState<string>('');
   const [groupError, setGroupError] = useState<string>('');
 
   useEffect(() => {
@@ -26,15 +27,23 @@ export const StudentModal: React.FC<StudentModalProps> = ({
     }
   }, [initialState]);
 
-  const groupPattern = /^\d{4}[A-Z]$/;
-
   const handleSave = () => {
+    const groupPattern = /^\d{4}[A-Z]$/;
+    const trimmedName = name.trim();
+
+    if (trimmedName.length <= 3) {
+      setNameError('Name must be more than 3 characters long after trimming.');
+      return;
+    }
+
     if (!groupPattern.test(group)) {
       setGroupError('Group must match pattern xxxxY (e.g., 1204A)');
       return;
     }
+
+    setNameError('');
     setGroupError('');
-    onSave(name, group, initialState?.id);
+    onSave(trimmedName, group, initialState?.id);
   };
 
   return (
@@ -62,6 +71,8 @@ export const StudentModal: React.FC<StudentModalProps> = ({
           value={name}
           onChange={(e) => setName(e.target.value)}
           fullWidth
+          error={!!nameError}
+          helperText={nameError}
         />
         <TextField
           label="Group"

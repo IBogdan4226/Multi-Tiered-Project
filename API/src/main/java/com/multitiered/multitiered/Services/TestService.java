@@ -1,8 +1,7 @@
 package com.multitiered.multitiered.Services;
 
-import com.multitiered.multitiered.Entities.Student;
-import com.multitiered.multitiered.Entities.Test;
-import com.multitiered.multitiered.Entities.TestStudent;
+import com.multitiered.multitiered.Entities.*;
+import com.multitiered.multitiered.Exceptions.GenericException;
 import com.multitiered.multitiered.Exceptions.StudentNotFound;
 import com.multitiered.multitiered.Exceptions.TestNotFound;
 import com.multitiered.multitiered.Interfaces.ITestService;
@@ -51,7 +50,8 @@ public class TestService implements ITestService {
     }
 
     @Override
-    public Test save(Test test) {
+    public Test save(Test test) throws GenericException {
+        validateTest(test);
         return _testRepo.save(test);
     }
 
@@ -61,7 +61,20 @@ public class TestService implements ITestService {
     }
 
     @Override
-    public TestStudent saveStudentGrade(TestStudentRequestDTO testStudent, String testId, String studentId) {
+    public TestStudent saveStudentGrade(TestStudentRequestDTO testStudent, String testId, String studentId) throws GenericException {
+        if (studentId == null || studentId.trim().isEmpty()) {
+            throw new GenericException("Student ID cannot be null or empty.");
+        }
+
+        if (testId == null || testId.trim().isEmpty()) {
+            throw new GenericException("Test ID cannot be null or empty.");
+        }
+
+        Float grade = testStudent.getGrade();
+        if (grade == null || grade < 1 || grade > 10) {
+            throw new GenericException("Grade must be between 1 and 10.");
+        }
+
         TestStudent fullObject = new TestStudent(
                 null,
                 studentId,
@@ -99,6 +112,69 @@ public class TestService implements ITestService {
             return studentDTO;
         }
         return null;
+    }
+
+    private void validateTest(Test test) throws GenericException {
+        if (test.getTeacherId() == null ) {
+            throw new GenericException("Teacher ID cannot be null.");
+        }
+
+        String testName = test.getTestName();
+        if (testName == null || testName.trim().isEmpty()) {
+            throw new GenericException("Test name cannot be null or empty.");
+        }
+        if (testName.length() < 3 || testName.length() > 500) {
+            throw new GenericException("Test name must be between 3 and 500 characters.");
+        }
+
+        List<Question> questions = test.getQuestions();
+        if (questions == null || questions.isEmpty()) {
+            throw new GenericException("Questions cannot be null or empty.");
+        }
+        if (questions.size() < 3) {
+            throw new GenericException("Test must have at least 3 questions.");
+        }
+
+        for (Question question : questions) {
+            if (question == null) {
+                throw new GenericException("Question cannot be null.");
+            }
+
+            String questionText = question.getQuestion();
+            if (questionText == null || questionText.trim().isEmpty()) {
+                throw new GenericException("Question text cannot be empty.");
+            }
+            if (questionText.length() < 10 || questionText.trim().split("\\s+").length < 3) {
+                throw new GenericException("Question text must be at least 10 characters long and contain at least 3 words.");
+            }
+
+            List<Answer> answers = question.getAnswers();
+            if (answers == null || answers.isEmpty()) {
+                throw new GenericException("Each question must have at least one answer.");
+            }
+
+            boolean hasCorrectAnswer = false;
+            boolean hasIncorrectAnswer = false;
+
+            for (Answer answer : answers) {
+                String answerText = answer.getAnswer();
+                if (answerText == null || answerText.trim().isEmpty()) {
+                    throw new GenericException("Answer text cannot be empty.");
+                }
+                if (answer.getIsCorrect()) {
+                    hasCorrectAnswer = true;
+                } else {
+                    hasIncorrectAnswer = true;
+                }
+            }
+
+            if (!hasCorrectAnswer) {
+                throw new GenericException("Each question must have at least one correct answer.");
+            }
+            if (!hasIncorrectAnswer) {
+                throw new GenericException("Each question must have at least one incorrect answer.");
+            }
+        }
     }
 }
 
