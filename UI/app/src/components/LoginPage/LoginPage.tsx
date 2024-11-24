@@ -39,7 +39,7 @@ export const LoginPage = () => {
     try {
       const response = await _login(username, password, cancelToken);
       const { token: jwtToken, id: userId, alias: userAlias } = response;
-      
+
       setAuth({ userId, userAlias, jwtToken });
       navigate(from, { replace: true });
     } catch (err: any) {
@@ -55,11 +55,19 @@ export const LoginPage = () => {
   }, [persist]);
 
   return (
-    <Box sx={{ maxWidth: 400, margin: 'auto', padding: 2 }}>
-      <Typography variant="h4" align="center" gutterBottom>
+    <Box
+      sx={{ maxWidth: 400, margin: 'auto', padding: 2 }}
+      data-testid="login-page"
+    >
+      <Typography
+        variant="h4"
+        align="center"
+        gutterBottom
+        data-testid="login-title"
+      >
         Login
       </Typography>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} data-testid="login-form">
         <TextField
           fullWidth
           variant="outlined"
@@ -69,6 +77,7 @@ export const LoginPage = () => {
           autoComplete="off"
           onChange={(e) => setUsername(e.target.value)}
           margin="normal"
+          data-testid="username-input"
         />
         <TextField
           fullWidth
@@ -82,6 +91,7 @@ export const LoginPage = () => {
           margin="normal"
           error={Boolean(error)}
           helperText={error}
+          data-testid="password-input"
         />
         <FormControlLabel
           control={
@@ -90,6 +100,7 @@ export const LoginPage = () => {
               onChange={(e) => setPersist(e.target.checked)}
               color="primary"
               id="remember"
+              data-testid="remember-checkbox"
             />
           }
           label="Remember me"
@@ -108,10 +119,15 @@ export const LoginPage = () => {
             color="primary"
             type="submit"
             endIcon={isLoading ? <CircularProgress size={20} /> : null}
+            data-testid="login-button"
           >
             Login
           </Button>
-          <NavLink to="/../register" style={{ textDecoration: 'none' }}>
+          <NavLink
+            to="/../register"
+            style={{ textDecoration: 'none' }}
+            data-testid="register-link"
+          >
             <Typography variant="body2" color="primary">
               Need an account? Sign up.
             </Typography>

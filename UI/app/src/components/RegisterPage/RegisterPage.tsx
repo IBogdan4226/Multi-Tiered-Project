@@ -56,11 +56,14 @@ export const RegisterPage = () => {
   }, [persist]);
 
   return (
-    <Box sx={{ maxWidth: 400, margin: 'auto', padding: 2 }}>
-      <Typography variant="h4" align="center" gutterBottom>
+    <Box
+      sx={{ maxWidth: 400, margin: 'auto', padding: 2 }}
+      data-testid="register-page"
+    >
+      <Typography variant="h4" align="center" gutterBottom data-testid="register-title">
         Register
       </Typography>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} data-testid="register-form">
         <TextField
           fullWidth
           variant="outlined"
@@ -70,6 +73,7 @@ export const RegisterPage = () => {
           autoComplete="off"
           onChange={(e) => setUsername(e.target.value)}
           margin="normal"
+          data-testid="username-input"
         />
         <TextField
           fullWidth
@@ -80,6 +84,7 @@ export const RegisterPage = () => {
           autoComplete="off"
           onChange={(e) => setAlias(e.target.value)}
           margin="normal"
+          data-testid="alias-input"
         />
         <TextField
           fullWidth
@@ -91,6 +96,7 @@ export const RegisterPage = () => {
           autoComplete="off"
           onChange={(e) => setPassword(e.target.value)}
           margin="normal"
+          data-testid="password-input"
         />
         <TextField
           fullWidth
@@ -104,6 +110,7 @@ export const RegisterPage = () => {
           margin="normal"
           error={Boolean(error)}
           helperText={error}
+          data-testid="password-confirm-input"
         />
         <Box
           sx={{
@@ -118,11 +125,12 @@ export const RegisterPage = () => {
             variant="contained"
             color="primary"
             type="submit"
+            data-testid="register-button"
             endIcon={isLoading ? <CircularProgress size={20} /> : null}
           >
             Register
           </Button>
-          <NavLink to="/../login" style={{ textDecoration: 'none' }}>
+          <NavLink to="/../login" style={{ textDecoration: 'none' }} data-testid="login-link">
             <Typography variant="body2" color="primary">
               Have an account? Log in.
             </Typography>
