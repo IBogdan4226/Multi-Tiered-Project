@@ -1,0 +1,31 @@
+version: "3.9"
+
+services:
+  # # Backend service
+  backend:
+    build:
+      context: ./API
+      dockerfile: Dockerfile
+      tags:
+        - backend-app:latest
+    container_name: backend-app
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_DATA_MONGODB_URI=mongodb+srv://bogdanmarianionita25:wlZwAKe1ThV4G9HP@cluster0.5ppxc.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
+      - JWT_SECRET=b832a0de6f4d6c37be25cf5173352aa82eb076fdb9f8c023a78be74f9a44f4e5
+  # Frontend service (UI)
+  react-app:
+    build:
+      context: ./UI
+      dockerfile: Dockerfile
+      tags:
+        - react-app:latest
+    ports:
+      - "3000:80"
+    environment:
+      - NODE_ENV=production
+    volumes:
+      - ./UI:/app
+    depends_on:
+      - backend
