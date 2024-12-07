@@ -70,37 +70,41 @@ export const Students = () => {
   };
 
   return (
-    <Box sx={{ padding: 3 }}>
+    <Box sx={{ padding: 3 }} data-testid="students-container">
       <Box
         sx={{ display: 'flex', alignItems: 'center', gap: 2, marginBottom: 2 }}
+        data-testid="filter-container"
       >
         <TextField
           label="Filter by name"
           variant="outlined"
           fullWidth
           onChange={(e) => handleNameFilterChange(e.target.value)}
+          data-testid="name-filter"
         />
         <TextField
           label="Filter by group"
           variant="outlined"
           fullWidth
           onChange={(e) => handleGroupFilterChange(e.target.value)}
+          data-testid="group-filter"
         />
         <Button
           variant="contained"
           color="primary"
           onClick={() => handleOpenModal()}
           sx={{ whiteSpace: 'nowrap', minWidth: 'fit-content' }}
+          data-testid="add-student-button"
         >
           Add Student
         </Button>
       </Box>
       {students.length === 0 ? (
-        <Typography variant="body1" color="textSecondary">
+        <Typography variant="body1" color="textSecondary" data-testid="no-students-message">
           No students available.
         </Typography>
       ) : (
-        <Box sx={{ display: 'flex', flexDirection: 'row', gap: 2 }}>
+        <Box sx={{ display: 'flex', flexDirection: 'row', gap: 2 }} data-testid="students-list">
           {students.map((student) => (
             <StudentPreview
               key={student.id}

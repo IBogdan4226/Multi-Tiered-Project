@@ -25,14 +25,14 @@ describe('RegisterPage', () => {
       </MemoryRouter>
     );
 
-    expect(screen.getByTestId('register-page')).toBeInTheDocument();
-    expect(screen.getByTestId('register-title')).toHaveTextContent('Register');
-    expect(screen.getByTestId('username-input')).toBeInTheDocument();
-    expect(screen.getByTestId('alias-input')).toBeInTheDocument();
-    expect(screen.getByTestId('password-input')).toBeInTheDocument();
-    expect(screen.getByTestId('password-confirm-input')).toBeInTheDocument();
-    expect(screen.getByTestId('register-button')).toBeInTheDocument();
-    expect(screen.getByTestId('login-link')).toBeInTheDocument();
+    expect(screen.getByTestId('register-page'));
+    expect(screen.getByTestId('register-title').textContent).toBe('Register');
+    expect(screen.getByTestId('username-input'));
+    expect(screen.getByTestId('alias-input'));
+    expect(screen.getByTestId('password-input'));
+    expect(screen.getByTestId('password-confirm-input'));
+    expect(screen.getByTestId('register-button'));
+    expect(screen.getByTestId('login-link'));
   });
 
   it('shows an error for invalid input', async () => {
@@ -49,7 +49,7 @@ describe('RegisterPage', () => {
       screen.getByText(
         'Credentials must have a length greater than 3 and less than 20.'
       )
-    ).toBeInTheDocument();
+    );
   });
 
   it('submits valid inputs', async () => {

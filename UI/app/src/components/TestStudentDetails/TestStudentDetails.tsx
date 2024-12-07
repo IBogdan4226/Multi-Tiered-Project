@@ -56,6 +56,7 @@ export const TestStudentDetails = () => {
 
   return (
     <Box
+      data-testid="test-student-details"
       sx={{
         display: 'flex',
         flexDirection: 'column',
@@ -64,11 +65,12 @@ export const TestStudentDetails = () => {
       }}
     >
       <Paper elevation={3} sx={{ padding: 2, width: '100%', maxWidth: 600 }}>
-        <Typography variant="h5" sx={{ marginBottom: 2 }}>
+        <Typography data-testid="student-name" variant="h5" sx={{ marginBottom: 2 }}>
           {testStudentData?.studentName}
         </Typography>
 
         <TextField
+          data-testid="note-input"
           label="Note"
           value={testStudentData?.note || ''}
           fullWidth
@@ -77,6 +79,7 @@ export const TestStudentDetails = () => {
         />
 
         <TextField
+          data-testid="grade-input"
           label="Grade"
           value={testStudentData?.grade || ''}
           fullWidth
@@ -86,18 +89,18 @@ export const TestStudentDetails = () => {
         />
 
         {errorMessage && (
-          <Typography variant="body2" color="error" sx={{ marginTop: 2 }}>
+          <Typography data-testid="error-message" variant="body2" color="error" sx={{ marginTop: 2 }}>
             {errorMessage}
           </Typography>
         )}
         {successMessage && (
-          <Typography variant="body2" color="primary" sx={{ marginTop: 2 }}>
+          <Typography data-testid="success-message" variant="body2" color="primary" sx={{ marginTop: 2 }}>
             {successMessage}
           </Typography>
         )}
 
         <Box sx={{ marginTop: 2, textAlign: 'center' }}>
-          <Button variant="contained" color="primary" onClick={handleUpdate}>
+          <Button data-testid="update-button" variant="contained" color="primary" onClick={handleUpdate}>
             Update
           </Button>
         </Box>
@@ -115,12 +118,13 @@ export const TestStudentDetails = () => {
       >
         {testStudentData?.testPhoto ? (
           <img
+            data-testid="test-photo"
             src={`${testStudentData?.testPhoto}`}
             alt="Test"
             style={{ width: '100%', height: 'auto', maxHeight: '500px' }}
           />
         ) : (
-          <Typography variant="body1" color="textSecondary">
+          <Typography data-testid="no-photo-message" variant="body1" color="textSecondary">
             No photo saved for this test.
           </Typography>
         )}

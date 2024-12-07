@@ -56,6 +56,7 @@ export const Navbar = () => {
         backgroundImage: 'linear-gradient(to right, #80d0c7, #13547a)',
         borderBottom: '1px solid grey',
       }}
+      data-testid="navbar"
     >
       <Toolbar
         sx={{
@@ -74,6 +75,7 @@ export const Navbar = () => {
               fontWeight: currentTab === Tabs.Tests ? 'bold' : 'normal',
               color: currentTab === Tabs.Tests ? 'black' : 'inherit',
             }}
+            data-testid="navbar-tests-button"
           >
             See Tests
           </Button>
@@ -85,6 +87,7 @@ export const Navbar = () => {
               fontWeight: currentTab === Tabs.CreateTests ? 'bold' : 'normal',
               color: currentTab === Tabs.CreateTests ? 'black' : 'inherit',
             }}
+            data-testid="navbar-create-tests-button"
           >
             Create Test
           </Button>
@@ -96,6 +99,7 @@ export const Navbar = () => {
               fontWeight: currentTab === Tabs.Students ? 'bold' : 'normal',
               color: currentTab === Tabs.Students ? 'black' : 'inherit',
             }}
+            data-testid="navbar-students-button"
           >
             Students
           </Button>
@@ -105,6 +109,7 @@ export const Navbar = () => {
             color="inherit"
             onClick={() => setIsDropdownOpen(!isDropdownOpen)}
             ref={ref}
+            data-testid="navbar-user-icon-button"
           >
             <AccountCircleIcon fontSize="large" />
           </IconButton>
@@ -120,6 +125,7 @@ export const Navbar = () => {
                 boxShadow: 3,
               },
             }}
+            data-testid="navbar-dropdown-menu"
           >
             {auth?.jwtToken ? (
               <MenuItem
@@ -127,6 +133,7 @@ export const Navbar = () => {
                   setIsDropdownOpen(false);
                   signOut();
                 }}
+                data-testid="navbar-signout-item"
               >
                 Sign Out
               </MenuItem>
@@ -149,6 +156,7 @@ export const Navbar = () => {
                     setIsDropdownOpen(false);
                     navigate(AppRoute.REGISTER);
                   }}
+                  data-testid="navbar-register-item"
                 >
                   Register
                 </MenuItem>,

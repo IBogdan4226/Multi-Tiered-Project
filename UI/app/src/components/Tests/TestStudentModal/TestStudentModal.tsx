@@ -1,13 +1,13 @@
-import Box from '@mui/material/Box/Box';
+import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import FormControl from '@mui/material/FormControl';
 import Grid from '@mui/material/Grid';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
-import Modal from '@mui/material/Modal/Modal';
+import Modal from '@mui/material/Modal';
 import Select from '@mui/material/Select';
 import TextField from '@mui/material/TextField';
-import Typography from '@mui/material/Typography/Typography';
+import Typography from '@mui/material/Typography';
 import React, { useState } from 'react';
 
 export type TestStudentModalProps = {

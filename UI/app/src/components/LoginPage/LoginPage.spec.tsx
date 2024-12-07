@@ -25,13 +25,13 @@ describe('LoginPage', () => {
       </MemoryRouter>
     );
 
-    expect(screen.getByTestId('login-page')).toBeInTheDocument();
-    expect(screen.getByTestId('login-title')).toHaveTextContent('Login');
-    expect(screen.getByTestId('username-input')).toBeInTheDocument();
-    expect(screen.getByTestId('password-input')).toBeInTheDocument();
-    expect(screen.getByTestId('remember-checkbox')).toBeInTheDocument();
-    expect(screen.getByTestId('login-button')).toBeInTheDocument();
-    expect(screen.getByTestId('register-link')).toBeInTheDocument();
+    expect(screen.getByTestId('login-page'))
+    expect(screen.getByTestId('login-title').textContent).toBe('Login');
+    expect(screen.getByTestId('username-input'))
+    expect(screen.getByTestId('password-input'))
+    expect(screen.getByTestId('remember-checkbox'))
+    expect(screen.getByTestId('login-button'))
+    expect(screen.getByTestId('register-link'))
   });
 
   it('displays an error when inputs are invalid', async () => {
@@ -46,7 +46,7 @@ describe('LoginPage', () => {
 
     expect(
       screen.getByText('Credentials must have a length greater than 3.')
-    ).toBeInTheDocument();
+    )
   });
 
   it('submits the form with valid inputs', async () => {

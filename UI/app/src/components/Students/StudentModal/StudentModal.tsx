@@ -47,7 +47,7 @@ export const StudentModal = ({
   };
 
   return (
-    <Modal open={open} onClose={onClose}>
+    <Modal open={open} onClose={onClose} data-testid="student-modal">
       <Box
         sx={{
           position: 'absolute',
@@ -83,7 +83,7 @@ export const StudentModal = ({
           helperText={groupError}
         />
         <Box sx={{ display: 'flex', justifyContent: 'flex-end', gap: 2 }}>
-          <Button onClick={onClose} color="secondary">
+          <Button onClick={onClose} color="secondary" data-testid="close">
             Cancel
           </Button>
           <Button onClick={handleSave} variant="contained" color="primary">
