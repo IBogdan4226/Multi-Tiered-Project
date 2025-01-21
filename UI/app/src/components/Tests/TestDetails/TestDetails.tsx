@@ -195,7 +195,7 @@ const TestDetails = () => {
             <BubbleSheetComponent
               id={testId!}
               title={testName}
-              noQuestions={questions?.length}
+              questions={questions}
             />
           </Box>
         </AccordionDetails>

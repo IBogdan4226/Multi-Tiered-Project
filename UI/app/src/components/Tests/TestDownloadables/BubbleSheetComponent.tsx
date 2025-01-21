@@ -1,14 +1,15 @@
 import { Box, Divider, TextField, Typography } from '@mui/material';
 import QRCode from 'react-qr-code';
 import BubbleComponent from './BubbleComponent';
+import { QuestionDTO } from 'app/src/types/Question';
 
 interface BubbleSheetProps {
   id: string;
   title: string;
-  noQuestions: number;
+  questions: QuestionDTO[];
 }
 
-const BubbleSheetComponent = ({ id, title, noQuestions }: BubbleSheetProps) => {
+const BubbleSheetComponent = ({ id, title, questions }: BubbleSheetProps) => {
   return (
     <Box
       sx={{
@@ -76,11 +77,12 @@ const BubbleSheetComponent = ({ id, title, noQuestions }: BubbleSheetProps) => {
             paddingRight: '15px',
           }}
         >
-          {Array.from({ length: noQuestions }, (_, index) => (
+          {questions.map((q,index) => (
             <BubbleComponent
-              key={index}
+              key={q.qId}
               indexQuestion={index}
-              totalQuestions={noQuestions}
+              totalQuestions={questions.length}
+              numberOfAnswers={q.answers.length}
             />
           ))}
         </Box>

@@ -15,6 +15,8 @@ export const RequireNoAuth = () => {
 export const RequireAuth = () => {
   const { auth } = useAuthContext();
   const location = useLocation();
+
+  console.log(auth)
   return auth?.jwtToken ? (
     <Outlet />
   ) : (

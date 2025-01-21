@@ -26,7 +26,7 @@ export const Tests = () => {
 
   const getTests = async (filterName: string) => {
     const res = await _getTests(filterName);
-    if (res) {
+    if (res !== null && res !== undefined) {
       setTests(res);
     }
   };

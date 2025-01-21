@@ -22,7 +22,7 @@ public class StudentService implements IStudentService {
 
     @Override
     public List<Student> listAll(String studentName, String groupName) {
-        return _studentRepo.findAllByNameContainingAndGroupContaining(
+        return _studentRepo.findAllByNameContainingIgnoreCaseAndGroupContainingIgnoreCase(
                 Objects.requireNonNullElse(studentName, ""),
                 Objects.requireNonNullElse(groupName, "")
         );

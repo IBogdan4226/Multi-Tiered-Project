@@ -3,11 +3,13 @@ import { Box, Typography } from '@mui/material';
 export type BubbleComponentProps = {
   indexQuestion: number;
   totalQuestions: number;
+  numberOfAnswers: number;
 };
 
 const BubbleComponent = ({
   indexQuestion,
   totalQuestions,
+  numberOfAnswers,
 }: BubbleComponentProps) => {
   const bubbleContainerStyle = {
     width: '100%',
@@ -15,8 +17,9 @@ const BubbleComponent = ({
     height: 'auto',
     display: 'flex',
     alignItems: 'center',
-    justifyContent:
-      indexQuestion <= Math.floor(totalQuestions / 2) ? 'start' : 'end',
+    justifyContent: 'start',
+    marginLeft:
+      indexQuestion + 1 <= Math.floor(totalQuestions / 2) ? '0' : '100px',
     marginBottom: '10px',
   };
 
@@ -47,9 +50,9 @@ const BubbleComponent = ({
         Q{indexQuestion + 1 < 10 ? '0' : ''}
         {indexQuestion + 1}
       </Typography>
-      {['A', 'B', 'C', 'D'].map((letter, index) => (
+      {Array.from({ length: numberOfAnswers }, (_, index) => (
         <Typography key={index} sx={bubbleStyle}>
-          {letter}
+          {String.fromCharCode(65 + index)}
         </Typography>
       ))}
     </Box>
